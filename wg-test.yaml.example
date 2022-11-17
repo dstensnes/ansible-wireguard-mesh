@@ -1,0 +1,40 @@
+# vim: expandtab ts=2 sw=2 softtabstop=2 filetype=yaml
+
+- hosts:
+    - wg
+  roles:
+    - wgmesh
+  vars:
+    wg_mesh:
+      wg-test:
+        lport: 40001
+        netmask: 24
+        psk: Zqal570H9VMrgqGvwwCR+4YTHEVZvF1JfJ9NJKVvSnI=
+        nodes:
+          host1:
+            ifaddr: 10.1.2.1
+            pubkey: YPMaSAFNjFYfkHvrGmvsKoDzxJ+cuuRkpnJBXwBVsSY=
+            lport: 40002
+          host2:
+            ifaddr: 10.1.2.2
+            pubkey: OVVrYkNqZkloeWF1YnBZSHR3eG1rcHM1Q1VHOTN6eDFOWVZFRWhBWFJ4MD0K
+            endpoint:
+              addr: server1.example.com
+          host3:
+            ifaddr: 10.1.2.3
+            pubkey: PqVUbQLsmciGTE2b3PnYVe+qaIApjY/dwHMYx4NqFgI=
+            lport: 40003
+            endpoint:
+              addr: server2.example.com
+          host4:
+            ifaddr: 10.1.2.4
+            pubkey: Cyhvdk3JbpKO+bvVRhXca0JwTok7RpHrlJODCFi2TgE=
+            endpoint:
+              addr: server3.example.com
+              port: 40004
+          host5:
+            ifaddr: 10.1.2.5
+            pubkey: Klo+yCXxjrpcCoFk+Gzsg0M2segqvM477Ng8UiCQRj4=
+            endpoint:
+              addr: 1.2.3.4
+              port: 40005

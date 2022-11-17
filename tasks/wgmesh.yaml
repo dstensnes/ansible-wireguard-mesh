@@ -1,0 +1,26 @@
+# vim: expandtab ts=2 sw=2 softtabstop=2 filetype=yaml
+
+
+- name: "wgmesh key {{ wg_instane_name }}"
+  ansible.builtin.shell:
+    cmd: "umask 077 ; wg genkey | tee '{{ wg_instance_name }}.key' | wg pubkey > '{{ wg_instance_name }}.pub' ; cat '{{ wg_instance_name }}.pub'"
+    creates: "{{ wg_instance_name }}.pub"
+    chdir: "{{ wg_instance_dir }}"
+- name: "wgmesh load key data {{ wg_instance_name }}"
+  register: wg_key_result
+  ansible.builtin.slurp:
+    src: "{{ wg_instance_dir }}/{{ wg_instance_name }}.key"
+- name: "wgmesh load pub data {{ wg_instance_name }}"
+  register: wg_pub_result
+  ansible.builtin.slurp:
+    src: "{{ wg_instance_dir }}/{{ wg_instance_name }}.pub"
+- name: "wgmesh config file {{ wg_instance_name }}"
+  ansible.builtin.template:
+    src: wgmesh.template
+    dest: "{{ wg_instance_dir }}/{{ wg_instance_name }}.conf"
+  vars:
+    name: "{{ wg_instance_name }}"
+    conf: "{{ wg_instance_data }}"
+    wgdir: "{{ wg_instance_dir }}"
+    wgpub: "{{ wg_pub_result.content }}"
+    wgkey: "{{ wg_key_result.content }}"

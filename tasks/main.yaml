@@ -1,0 +1,9 @@
+# vim: expandtab ts=2 sw=2 softtabstop=2 filetype=yaml
+
+- name: "wgmesh"
+  loop: "{{ wg_mesh | default({}) | dict2items }}"
+  include_tasks: wgmesh.yaml
+  vars:
+    wg_instance_name: "{{ item.key }}"
+    wg_instance_data: "{{ item.value }}"
+    wg_instance_dir: "/{{ item.value.wg_data_dir | default('/etc/wireguard') | trim('/') }}"
