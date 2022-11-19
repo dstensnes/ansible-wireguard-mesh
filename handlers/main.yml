@@ -1,0 +1,4 @@
+- name: "wgmesh reconfigure {{ wg_instance_name }}"
+  ansible.builtin.service:
+    name: "wg-quick@{{ wg_instance_name }}"
+    state: restarted
