@@ -22,5 +22,5 @@
     name: "{{ wg_instance_name }}"
     conf: "{{ wg_instance_data }}"
     wgdir: "{{ wg_instance_dir }}"
-    wgpub: "{{ wg_pub_result.content }}"
-    wgkey: "{{ wg_key_result.content }}"
+    wgpub: "{{ wg_pub_result.content | b64decode | trim }}"
+    wgkey: "{{ wg_key_result.content | b64decode | trim }}"
