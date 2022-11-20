@@ -23,6 +23,7 @@ Table = off
 # NodeName = {{ i }}
 PublicKey = {{ conf.nodes[i].pubkey }}
 PresharedKey = {{ conf.psk }}
+PersistentKeepalive = {{ conf.keepalive | default(15) }}
 AllowedIPs = {{ route_list | join(', ') }}
 {%      if conf.nodes[i].endpoint is mapping and conf.nodes[i].endpoint.addr is string %}
 {%-       set dport = conf.nodes[i].endpoint.port | default(conf.nodes[i].lport) | default(conf.lport) %}
