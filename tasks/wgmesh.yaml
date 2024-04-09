@@ -15,6 +15,7 @@
   ansible.builtin.slurp:
     src: "{{ wg_instance_dir }}/{{ wg_instance_name }}.pub"
 - name: "wgmesh config file {{ wg_instance_name }}"
+  register: "wgmesh_conf"
   ansible.builtin.template:
     src: wgmesh.template
     dest: "{{ wg_instance_dir }}/{{ wg_instance_name }}.conf"
@@ -24,3 +25,8 @@
     wgdir: "{{ wg_instance_dir }}"
     wgpub: "{{ wg_pub_result.content | b64decode | trim }}"
     wgkey: "{{ wg_key_result.content | b64decode | trim }}"
+- name: "wgmesh reconfigure {{ wg_instance_name }}"
+  when: "wgmesh_conf"
+  ansible.builtin.service:
+    name: "wg-quick@{{ wg_instance_name }}"
+    state: restarted

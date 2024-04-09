@@ -1,13 +1,13 @@
 ### NOTE ### {{ ansible_managed }}
-{%- set my_conf = conf.nodes[inventory_hostname] -%}
-{%- set node_list = conf.nodes.keys() | sort | reject("eq", inventory_hostname) -%}
-
+{%  set my_conf = conf.nodes[inventory_hostname] -%}
+{%  set node_list = conf.nodes.keys() | sort | reject("eq", inventory_hostname) -%}
 {%  if my_conf.pubkey != wgpub %}
 ### WARNING ### Configured locally stored public key does not match
 ### WARNING ### public key from configuration, which is:
 ### WARNING ###   {{ my_conf.pubkey }}
 
 {%  endif %}
+
 [Interface]
 # PublicKey = {{ wgpub }}
 PrivateKey = {{ wgkey }}
