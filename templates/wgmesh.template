@@ -29,7 +29,7 @@ AllowedIPs = {{ route_list | join(', ') }}
 {%-       set dport = conf.nodes[i].endpoint.port | default(conf.nodes[i].lport) | default(conf.lport) %}
 {%-       if conf.nodes[i].endpoint.addr | ipaddr %}
 Endpoint = {{ conf.nodes[i].endpoint.addr }}:{{ dport }}
-{%-       else %}
+{%        else %}
 Endpoint = {{ lookup('community.general.dig', conf.nodes[i].endpoint.addr) }}:{{ dport }}
 {%        endif %}
 {%      endif %}
