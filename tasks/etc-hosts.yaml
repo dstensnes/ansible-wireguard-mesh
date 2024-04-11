@@ -1,0 +1,13 @@
+# vim: expandtab ts=2 sw=2 softtabstop=2 filetype=yaml
+---
+
+- name: "wgmesh add host to /etc/hosts"
+  loop_control:
+    loop_var: "wgnode"
+  loop: "{{ wg_instance_nodes | default({}) | dict2items }}"
+  when: "wgnode.key != inventory_hostname"
+  ansible.builtin.lineinfile:
+    dest: /etc/hosts
+    regexp: '.*[[:space:]]+{{ item }}[[:space:]]*$'
+    line: "{{ wgnode.value.ifaddr }}\t\t{{ wgnode.key }}.{{ wg_instance_domain }}"
+    state: present

@@ -1,9 +1,16 @@
 # vim: expandtab ts=2 sw=2 softtabstop=2 filetype=yaml
 
-- name: "wgmesh"
+- name: "wgmesh - {{ item.key }} - conf"
   loop: "{{ wg_mesh | default({}) | dict2items }}"
   include_tasks: wgmesh.yaml
   vars:
     wg_instance_name: "{{ item.key }}"
     wg_instance_data: "{{ item.value }}"
     wg_instance_dir: "/{{ item.value.wg_data_dir | default('/etc/wireguard') | trim('/') }}"
+- name: "wgmesh - {{ item.key }} - etc-hosts"
+  loop: "{{ wg_mesh | default({}) | dict2items }}"
+  when: "(item.value.domain is defined) and (item.value.domain|length > 0)"
+  include_tasks: etc-hosts.yaml
+  vars:
+    wg_instance_domain: "{{ item.value.domain }}"
+    wg_instance_nodes: "{{ item.value.nodes }}"

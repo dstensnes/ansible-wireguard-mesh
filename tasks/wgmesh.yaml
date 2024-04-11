@@ -26,7 +26,7 @@
     wgpub: "{{ wg_pub_result.content | b64decode | trim }}"
     wgkey: "{{ wg_key_result.content | b64decode | trim }}"
 - name: "wgmesh reconfigure {{ wg_instance_name }}"
-  when: "wgmesh_conf"
+  when: "wgmesh_conf is defined and wgmesh_conf.changed is defined and wgmesh_conf.changed"
   ansible.builtin.service:
     name: "wg-quick@{{ wg_instance_name }}"
     state: restarted
