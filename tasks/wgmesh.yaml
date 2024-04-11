@@ -15,6 +15,7 @@
   ansible.builtin.slurp:
     src: "{{ wg_instance_dir }}/{{ wg_instance_name }}.pub"
 - name: "wgmesh config file {{ wg_instance_name }}"
+  diff: false
   register: "wgmesh_conf"
   ansible.builtin.template:
     src: wgmesh.template
