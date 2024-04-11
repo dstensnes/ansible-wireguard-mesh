@@ -14,6 +14,9 @@ PrivateKey = {{ wgkey }}
 Address = {{ my_conf.ifaddr }}/{{ conf.netmask }}
 ListenPort = {{ my_conf.lport | default(conf.lport) }}
 Table = {{ my_conf.table if my_conf.table is defined else (conf.table if conf.table is defined else 'off') }}
+{%  if conf.mtu is defined -%}
+MTU = {{ conf.mtu }}
+{%-  endif %}
 
 {%  for i in node_list %}
 {%    if conf.nodes[i].pubkey is string and conf.nodes[i].pubkey | length > 0 %}
