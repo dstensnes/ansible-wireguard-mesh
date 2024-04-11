@@ -22,8 +22,7 @@ MTU = {{ conf.mtu }}
 {%    if conf.nodes[i].pubkey is string and conf.nodes[i].pubkey | length > 0 %}
 {%      set route_list = [ conf.nodes[i].ifaddr ] + ( conf.nodes[i].routes | default([]) ) | unique | select | list %}
 
-[Peer]
-# NodeName = {{ i }}
+[Peer] # {{ i }}
 PublicKey = {{ conf.nodes[i].pubkey }}
 PresharedKey = {{ conf.psk }}
 PersistentKeepalive = {{ conf.keepalive | default(15) }}
