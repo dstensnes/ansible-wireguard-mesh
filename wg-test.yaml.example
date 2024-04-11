@@ -10,6 +10,7 @@
         lport: 40001
         netmask: 24
         psk: Zqal570H9VMrgqGvwwCR+4YTHEVZvF1JfJ9NJKVvSnI=
+        domain: sillydomain
         nodes:
           host1:
             ifaddr: 10.1.2.1
