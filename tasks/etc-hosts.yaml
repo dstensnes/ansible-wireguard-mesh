@@ -8,6 +8,6 @@
   when: "wgnode.key != inventory_hostname"
   ansible.builtin.lineinfile:
     dest: /etc/hosts
-    regexp: '.*[[:space:]]+{{ item }}[[:space:]]*$'
+    regexp: '.*[[:space:]]+{{ wgnode.key | regex_escape() }}\.{{ wg_instance_domain | regex_escape() }}[[:space:]]*$'
     line: "{{ wgnode.value.ifaddr }}\t\t{{ wgnode.key }}.{{ wg_instance_domain }}"
     state: present
